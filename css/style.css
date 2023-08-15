@@ -1,0 +1,39 @@
+body { 
+    background-color:antiquewhite;
+
+
+}
+
+.letterContainer { 
+    display: flex;
+}
+
+.pictureContainer { 
+    width: 100%;
+    height: 500px;
+    border: 1px solid black;
+    margin: 20px 5px 0 5px;
+    text-align: center;
+    font-size: 200px;
+    /* display: flex; */
+    justify-content: center;
+
+    
+}
+
+.letter { 
+
+    margin: 0 5px;
+    background-color: white;
+    border: 1px solid black; 
+    text-align: center;
+    align-items: center;
+    padding: 10px;  
+    flex:auto; 
+}
+
+.letter:hover { 
+    border: 3px solid black; 
+    background-color: yellow;
+    font-size: 50px;
+}
