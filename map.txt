@@ -11,8 +11,9 @@ click a letter:
   - correct guesses ++ 
 
 TODO: 
-- improve style of letters
-- separate display div into two columsn: 
-- separate page for the rhyming words
+- improve style of letters ✔
+- separate display div into two columsn: ✔
+- can i speak the pronunciations of the letters - test
+- separate page for the rhyming words 
 - separate page for words that start with the same letter 
 - find proper pictures or draw them myself 

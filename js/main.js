@@ -1,80 +1,109 @@
 
-const alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+const alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'] // the alphabet as an array
+const sounds = ['æ ā ah ā-uh uh' ]
 
-const synth = window.speechSynthesis;
+const synth = window.speechSynthesis; // create instance of window.speechSynthesis to enable text to speech
+let selectedLetter = '';
 
-// const { Configuration, OpenAIApi } = require("./openai");
-// const configuration = new Configuration({
-//   apiKey: process.env.OPENAI_API_KEY,
-// });
-// const openai = new OpenAIApi(configuration);
-
+// speak the text that is passed in to the function using the web speech API
 const speakText = function(text) {
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.rate = 0.5;
-    synth.speak(speech);
+    const speech = new SpeechSynthesisUtterance(text); // create a new 'utterance' of speech using the text that is passed into the function
+    speech.rate = 0.5; // slow down rate of speech
+    synth.speak(speech); 
 };
 
-const letterContainer = document.querySelector(".letterContainer")
-const pictureContainer = document.querySelector(".pictureContainer")
+// *** TEST for sounds of letters ***
+speakText('hello');
+
+// declare variables for buttons
+const letterAndSoundButton = document.querySelector("#letterAndSound"); // 'main page' button
+const wordsStartingWithButton = document.querySelector("#wordsStartingWith");
+const wordsRhymingWithButton = document.querySelector("#wordsRhymingWith");
+// declare variables for containers
+const letterContainer = document.querySelector(".letterContainer"); // container for all of the letters of the alphabet at the top of the initial page 
+const mainPageContainer = document.querySelector(".mainPageContainer"); // 
+const wordsStartingWithContainer = document.querySelector(".wordsStartingWith");
+const wordsRhymingWithContainer = document.querySelector(".wordsRhymingWith");
+
+let mainWord = '';
+let matchingWords = []; 
+let rhymingWords = []; 
 
 alphabet.forEach( letter => {
     const letterDiv = document.createElement('div')
-    // const audioDiv = document.createElement('audio')
-    // audioDiv.src = `sounds/${letter}.wav`;
-    // audioDiv.className = 'audio'; 
-    // console.log(audioDiv)
-
-    // letterDiv.innerHTML += audioDiv; 
     letterDiv.className = 'letter'; 
-    letterDiv.innerHTML = letter;
-    // letterDiv.appendChild(audioDiv) 
+    letterDiv.innerHTML = letter.toUpperCase();
     letterContainer.appendChild(letterDiv)
     })
 
 const letterDivs = document.querySelectorAll(".letter") 
 const wordDivs = []; 
 
+const leftLetterDiv = document.querySelector("#left")
+const rightLetterDiv = document.querySelector("#right")
+
 letterDivs.forEach((letter, index) => {
     letter.addEventListener('click', function() {
-        speakText(alphabet[index]); 
-        pictureContainer.innerHTML = ''
+        selectedLetter = alphabet[index]
+        speakText(selectedLetter); 
+        leftLetterDiv.innerHTML = ''
+        rightLetterDiv.innerHTML = ''
+        wordsStartingWithContainer.innerHTML = ''
+        wordsRhymingWithContainer.innerHTML = ''
 
         const bigLetterDiv = document.createElement('div'); 
-        bigLetterDiv.innerHTML = alphabet[index]
-        pictureContainer.appendChild(bigLetterDiv)
+        bigLetterDiv.innerHTML = selectedLetter.toUpperCase() + " " + selectedLetter
+        leftLetterDiv.appendChild(bigLetterDiv)
 
-        // get 3-letter words starting with the clicked letter, sorted by 'popularity'
-        axios.get(`https://api.datamuse.com/words?sp=${alphabet[index]}??`) 
+        // get one 3-letter wordstarting with the clicked letter, sorted by 'popularity'
+        axios.get(`https://api.datamuse.com/words?sp=${selectedLetter}??`) 
             .then( res => { 
-                const matchingWords = res.data.slice(0,3)
-                matchingWords.forEach(word => { 
-                    const wordDiv = document.createElement('div'); 
-                    wordDiv.className= "word"; 
-                    wordDiv.id = word; 
-                    wordDiv.innerHTML += `${word.word}`;
-                    pictureContainer.appendChild(wordDiv) 
-                    wordDivs.push(wordDiv);
-                })
+                const wordDiv = document.createElement('div'); 
+                wordDiv.className= "word"; 
+                mainWord = `${res.data.slice(0,1)[0].word}`;
+                wordDiv.innerHTML += mainWord;
+                rightLetterDiv.appendChild(wordDiv) 
+                wordDivs.push(wordDiv);
             })
-    } )
+        
+        // get 3-letter words starting with the clicked letter, sorted by 'popularity'
+        axios.get(`https://api.datamuse.com/words?sp=${selectedLetter}??`) 
+        .then( res => { 
+            matchingWords = res.data.slice(0,3)
+            matchingWords.forEach(word => { 
+                const wordDiv = document.createElement('div'); 
+                wordDiv.className= "word"; 
+                wordDiv.id = word.word; 
+                wordDiv.innerHTML += `${word.word[0]}${word.word[1]}${word.word[2]}`;
+                wordsStartingWithContainer.appendChild(wordDiv) 
+                wordDivs.push(wordDiv);
+            })
+        })
+
+        // get words rhyming with the main word, sorted by 'popularity'
+        axios.get(`https://api.datamuse.com/words?rel_rhy=${mainWord}`) 
+        .then( res => { 
+            wordsRhymingWithContainer.innerHTML = `words that rhyme with: ${mainWord}`
+            rhymingWords = res.data.slice(0,3)
+            rhymingWords.forEach(word => { 
+                const wordDiv = document.createElement('div'); 
+                wordDiv.className= "word"; 
+                wordDiv.id = word.word; 
+                wordDiv.innerHTML += `${word.word}`;
+                wordsRhymingWithContainer.appendChild(wordDiv) 
+                wordDivs.push(wordDiv);
+            })
+        })
+        .catch(err => { 
+            console.log('error: ', err)
+        })
+    })
 });
 
-pictureContainer.addEventListener('click', async function(ev) { 
+
+mainPageContainer.addEventListener('click', async function(ev) { 
     speakText(ev.target.innerHTML); 
     
-    // const response = await openai.createImage({
-    //     prompt: ev.target.innerHTML,
-    //     n: 1,
-    //     size: "300x300",
-    //     });
-    //     image_url = response.data.data[0].url;
-
-    //     ev.target.innerHTML = ''; 
-    //     const img = document.createElement('img')
-    //     img.src = image_url
-    //     ev.target.appendChild(img)
-
     axios.get('https://www.flickr.com/services/rest/', {
         params: { 
             method: 'flickr.photos.search',
@@ -103,3 +132,23 @@ const generateImageUrl = (photo, size='q') => {
     return `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_${size}.jpg`;
 }
 
+wordsStartingWithButton.addEventListener('click', function(ev){ 
+    mainPageContainer.style.display = "none"
+    wordsStartingWithContainer.style.display = "block"
+    wordsRhymingWithContainer.style.display = "none"
+
+})
+
+letterAndSoundButton.addEventListener('click', function(ev){ 
+    mainPageContainer.style.display = "flex"
+    wordsStartingWithContainer.style.display = "none"
+    wordsRhymingWithContainer.style.display = "none"
+})
+
+wordsRhymingWithButton.addEventListener('click', function(ev){ 
+    mainPageContainer.style.display = "none"
+    wordsStartingWithContainer.style.display = "none"
+    wordsRhymingWithContainer.style.display = "block"
+
+
+})

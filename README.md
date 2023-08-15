@@ -1,7 +1,6 @@
 # final project 
 
-pre-kinder reading 
-this app is designed assist parents to teach pre-kinder children to read. 
+this app is designed to assist parents to teach pre-kinder children to read. 
 
 View my live project here: https://nickpgit.github.io/jsd-final-project/
 
