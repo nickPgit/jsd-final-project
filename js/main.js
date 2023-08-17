@@ -9,7 +9,7 @@ const synth = window.speechSynthesis;
 // speak the text that is passed in to this function using the web speech API
 const speakText = function(text) {
     const speech = new SpeechSynthesisUtterance(text); // create new 'utterance'
-    speech.rate = 1.5; // alter rate of speech
+    speech.rate = 0.8; // alter rate of speech
     // speech.voice = voices[5]; // set voice to 'Google UK English Female'
     synth.speak(speech); // speak the 'utterance'
 };
@@ -18,7 +18,6 @@ const speakText = function(text) {
 // let voices;
 // setTimeout(() => {
 //     voices = synth.getVoices();
-
 // }, 50);
 
 // declare variables for buttons
@@ -26,7 +25,7 @@ const letterAndSoundButton = document.querySelector("#letterAndSound");
 const wordsStartingWithButton = document.querySelector("#wordsStartingWith");
 const wordsRhymingWithButton = document.querySelector("#wordsRhymingWith");
 const animalsButton = document.querySelector("#animals");
-// declare variables for containers
+// declare variables for containers, img
 const letterContainer = document.querySelector(".letterContainer"); 
 const mainPageContainer = document.querySelector(".mainPageContainer"); 
 const wordsStartingWithContainer = document.querySelector(".wordsStartingWith");
@@ -35,12 +34,12 @@ const animalsContainer = document.querySelector(".animals");
 const instructionsContainer = document.querySelector(".instructions");
 const cat = document.querySelector("#cat");
 
-// create variables to keep track of and alter the following
+// create variables to keep track of:
 let selectedLetter = '';
 let mainWord = '';
 let matchingWords = []; 
 let rhymingWords = []; 
-let letters = []; 
+// let letters = []; 
 
 // create a visible letter for each letter in the alphabet at the top of screen
 alphabet.forEach( letter => {
@@ -48,14 +47,12 @@ alphabet.forEach( letter => {
     letterDiv.className = 'letter'; 
     letterDiv.innerHTML = letter.toUpperCase();
     letterContainer.appendChild(letterDiv)
-    })
+})
 
 // get all of the letters (divs) after they have been loaded
 const letterDivs = document.querySelectorAll(".letter") 
 setTimeout(() => {
-    letterDivs.forEach(letter => { 
-        letter.style.animation = "word 5s";
-    })
+    letterDivs.forEach(letter => {letter.style.animation = "word 5s"})
 }, 2000);
 
 // left and right divs of the main display section
@@ -170,7 +167,7 @@ const generateImageUrl = (photo, size='q') => {
 
 // speak the text of each of the containers ('pages')
 leftLetterDiv.addEventListener('click', function(ev) { 
-    speakText(ev.target.innerHTML[0]); 
+    speakText(ev.target.innerHTML[2]); 
 })
 rightLetterDiv.addEventListener('click', function(ev) { 
     speakText(ev.target.innerHTML); 

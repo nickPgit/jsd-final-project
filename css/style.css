@@ -185,7 +185,7 @@ div.word:hover {
 
 nav { 
     position: relative;
-    left: 25%;
+    /* left: 25%; */
     margin: 7px;
 
 }
