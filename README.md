@@ -14,6 +14,10 @@ This app is designed to assist parents to teach pre-kinder children to read (and
 
 **How it works:** 
 The app uses AJAX requests to obtain information about a clicked letter - including words that start with that letter, and rhyming words - to populate the UI accordingly. The app uses the Web Speech API to say any letter or word that is clicked. The app contains instructions for use in the grey instructions box at the bottom of the page.
+The child can flexibly go through the app at their own pace, eg.:
+1. go through all activities for each letter 
+2. go through all letter sounds only
+3. go through the animal pictures for each letter only, etc
 
 **screenshots:** 
 ![main page](images/main.png)
@@ -39,3 +43,7 @@ The Web Speech API - I used this inbuilt browser API to 'say' the words or lette
 - use speech recognition to check whether the child says the sound of the letter or says the word correctly 
 - make this into an actual game, to make it more engaging, with cartoon characters, letters that move around the screen, allowing the child to interactively experiment with the sounds of letter, perhaps allowing them to join letters or sounds together to form new sounds and words. Make it self-guided by the child rather than directed by the parent 
 - research the reading teaching methods further, to be more clear about exactly how the app should be used by parents to teach children, to aid learning
+
+**other notes**
+- I elected not to use localStorage to persist data, because the idea is for the child to practice all of the letters in one session. 
+- I elected not to use a 'favouriting' or a reward system, because the app is mainly about practicing the sounds
