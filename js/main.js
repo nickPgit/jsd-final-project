@@ -9,7 +9,7 @@ const synth = window.speechSynthesis;
 // speak the text that is passed in to this function using the web speech API
 const speakText = function(text) {
     const speech = new SpeechSynthesisUtterance(text); // create new 'utterance'
-    speech.rate = 0.8; // alter rate of speech
+    speech.rate = 1.5; // alter rate of speech
     // speech.voice = voices[5]; // set voice to 'Google UK English Female'
     synth.speak(speech); // speak the 'utterance'
 };
