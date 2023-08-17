@@ -10,15 +10,16 @@ const synth = window.speechSynthesis;
 const speakText = function(text) {
     const speech = new SpeechSynthesisUtterance(text); // create new 'utterance'
     speech.rate = 0.8; // alter rate of speech
-    speech.voice = voices[5]; // set voice to 'Google UK English Female'
+    // speech.voice = voices[5]; // set voice to 'Google UK English Female'
     synth.speak(speech); // speak the 'utterance'
 };
 
 // get the available voices after 50 ms (allow them to load first)
-let voices;
-setTimeout(() => {
-    voices = synth.getVoices()
-}, 50);
+// let voices;
+// setTimeout(() => {
+//     voices = synth.getVoices();
+
+// }, 50);
 
 // declare variables for buttons
 const letterAndSoundButton = document.querySelector("#letterAndSound"); 
