@@ -1,5 +1,5 @@
-# H1 final project - learning to read
-# H2 JSD final project
+# final project - learning to read
+## JSD final project
 
 **Try it out here:** https://nickpgit.github.io/jsd-final-project/
 
@@ -51,4 +51,3 @@ The Web Speech API - I used this inbuilt browser API to 'say' the words or lette
 - use speech recognition to check whether the child says the sound of the letter or says the word correctly 
 - make this into an actual game, to make it more engaging, with cartoon characters, letters that move around the screen, allowing the child to interactively experiment with the sounds of letter, perhaps allowing them to join letters or sounds together to form new sounds and words. 
 - research the reading teaching methods further, to be more clear about exactly how the app should be used by parents to teach children. 
-- 
